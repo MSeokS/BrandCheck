@@ -1,5 +1,5 @@
 import cv2
-
+import os
 
 # 프레임 추출
 def extract_frames(video_file):
@@ -33,13 +33,17 @@ def resize_images(image_list, width, height):
         resized_images.append(rgb_image)
     return resized_images
 
-video = "vita500.mp4"
-frames_list = extract_frames(video)
-resized_images = resize_images(frames_list, 244, 244) 
+video_list = ["vita500", "cool", "teazle"]
 
-# 이미지 확인용
-for idx, resized_image in enumerate(resized_images):
-    cv2.imshow(f"Resized Image {idx}", resized_image)
-    print(resized_image.shape)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+for drink in video_list:
+    video = drink + ".mp4"
+    frames_list = extract_frames(video)
+    resized_images = resize_images(frames_list, 244, 244) 
+
+    image_path = f"./{drink}/"
+
+    if not os.path.exists(image_path):
+        os.makedirs(image_path)
+
+    for i in range(len(resized_images)):
+        cv2.imwrite(image_path + f"{drink}_{i}.jpg", resized_images[i])

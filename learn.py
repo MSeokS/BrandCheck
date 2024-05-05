@@ -8,7 +8,7 @@ output = model.output
 
 x = GlobalAveragePooling2D()(output)
 x = Dense(64, activation='relu')(x)
-output = Dense(10, activation='softmax', name='output')(x)
+output = Dense(3, activation='softmax', name='output')(x)
 
 model = Model(inputs=model.input, outputs=output)
 
@@ -21,15 +21,16 @@ import numpy as np
 import os
 import cv2
 
-filename_train = ["files"]
+filename_train = ["vita500", "cool", "teazle"]
 filename_test = []
 
 train_image = []
+tr_im = []
 train_label = []
 test_image = []
 test_label = []
 
-for i in range(0, 1):
+for i in range(len(filename_train)):
     image_dir = f"./{filename_train[i]}/"
     image_files = [os.path.join(image_dir, name) for name in os.listdir(image_dir) if name.endswith(('jpg'))]
 
@@ -42,7 +43,9 @@ for i in range(0, 1):
 train_image = np.array(train_image)
 train_label = np.array(train_label)
 
-for i in range(0, 0):
+print(train_label)
+
+for i in range(len(filename_test)):
     image_dir = f"./{filename_test[i]}/"
     image_files = [os.path.join(image_dir, name) for name in os.listdir(image_dir) if name.endswith(('jpg'))]
 
@@ -59,7 +62,9 @@ train_result = to_categorical(train_label)
 #test_result = to_categorical(test_label)
 train_image, val_image, train_result, val_result = train_test_split(train_image, train_result, test_size = 0.15)
 
-print(train_label.shape, train_result.shape)
+print(train_image.shape, train_result.shape)
+print(val_image.shape, val_result.shape)
+print(val_result)
 
 #라벨 제작 끝
 
@@ -89,4 +94,7 @@ stop_cb = EarlyStopping(monitor='val_loss', patience=5, mode='min', verbose=1)
 
 result = model.fit(flow_train, epochs=50, validation_data=flow_val, callbacks=[reduce_lr_cb, stop_cb])
 
-model.evaluate(flow_test)
+#model.evaluate(flow_test)
+
+from tensorflow.keras.models import save_model
+model.save("model_1.1_3.h5")
