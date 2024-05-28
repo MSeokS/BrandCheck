@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO
 from picamera import PiCamera
+from adafruit_servokit import ServoKit
 from gtts import gTTS
 import pygame
 import time
@@ -14,6 +15,8 @@ model = load_model("Resnet50_False_hyperband.h5")
 
 with open("labels.txt", "r", encoding="utf-8") as file:
     labels = file.read().splitlines()
+
+kit = ServoKit(channels=12)
 
 #btn1 = 17
 #btn2 = 2
@@ -53,6 +56,13 @@ prediction = model.predict(img)
 result = np.argmax(prediction)
 speak(labels[result])
 print(labels[result])
+for i in range(12):
+    kit.servo[i].angle = 135
+time.sleep(5)
+for i in range(12):
+    kit.servo[i].angle = 30
+
+
 """
 try:
     while 1:
