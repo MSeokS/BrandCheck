@@ -47,19 +47,22 @@ def speak(text):
     pygame.mixer.quit()
 
 print("시작")
+picture = take_picture()
 img = predict.predict()
 prediction = model.predict(img)
 result = np.argmax(prediction)
 speak(labels[result])
 print(labels[result])
-
+"""
 try:
     while 1:
         picture = take_picture()
         result = predict.predict()
-        speak(labels[result])            time.sleep(0.5)
+        speak(labels[result])            
+        time.sleep(0.5)
 
 
 finally:
     GPIO.cleanup()
     camera.close()
+"""
