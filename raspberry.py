@@ -4,6 +4,7 @@ from gtts import gTTS
 import pygame
 import time
 import predict
+import numpy as np
 
 import tensorflow as tf
 from tensorflow.keras.models import load_model
@@ -14,16 +15,16 @@ model = load_model("Resnet50_False_hyperband.h5")
 with open("labels.txt", "r", encoding="utf-8") as file:
     labels = file.read().splitlines()
 
-btn1 = 17
+#btn1 = 17
 #btn2 = 2
 #btn3 = 3
 #rst = 0
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(btn1, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(btn2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(btn3, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-GPIO.setup(rst, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setmode(GPIO.BCM)
+#GPIO.setup(btn1, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setup(btn2, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setup(btn3, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setup(rst, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 camera = PiCamera()
 
@@ -45,17 +46,19 @@ def speak(text):
 
     pygame.mixer.quit()
 
+print("시작")
+img = predict.predict()
+prediction = model.predict(img)
+result = np.argmax(prediction)
+speak(labels[result])
+print(labels[result])
+
 try:
     while 1:
-        if GPIO.input(btn1):
-            picture = take_picture()
-            result = predict.predict()
-            speak(labels[result])
-            time.sleep(0.5)
+        picture = take_picture()
+        result = predict.predict()
+        speak(labels[result])            time.sleep(0.5)
 
-
-#except GPIO.input(rst):
-#    GPIO.cleanup
 
 finally:
     GPIO.cleanup()

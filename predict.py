@@ -1,6 +1,7 @@
 import numpy as np
-"""
+
 import tensorflow as tf
+"""
 from tensorflow.keras.models import load_model
 from tensorflow.keras.utils import to_categorical
 
@@ -20,8 +21,4 @@ def predict():
 
     img = np.expand_dims(img, axis=0)
 
-    one_hot = model.predict(img)
-
-    prediction = np.argmax(one_hot)
-
-    return prediction
+    return img
