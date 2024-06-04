@@ -51,12 +51,6 @@ def speak(text):
         time.sleep(1)
 
     pygame.mixer.quit()
-
-
-def counter(price):
-    mill = price // 100
-    thou = (price % 100) // 10
-    hund = price % 10
     
 def braille(num, digit):
     if num == 0:
