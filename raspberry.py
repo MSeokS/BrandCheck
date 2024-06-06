@@ -25,7 +25,7 @@ button_rmv = Button(16)
 button_rst = Button(17)
 
 
-camera = PiCamera2()
+camera = Picamera2()
 total_price = 0
 
 def take_picture():
