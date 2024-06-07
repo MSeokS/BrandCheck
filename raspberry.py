@@ -28,7 +28,7 @@ button_rst = Button(14)
 
 
 picam2 = Picamera2()
-config = picam2.create_still_configuration()
+config = picam2.create_still_configuration(main={"size": (720, 1280)})
 picam2.configure(config)
 picam2.start()
 
