@@ -126,6 +126,11 @@ def braille(num, digit):
 
 print("시작")
 try:
+    for i in range(12):
+        servo(i, 0)
+        if i % 4 == 3:
+            time.sleep(1)
+
     while True:
         if button_cam.is_pressed:
             picture = take_picture()
@@ -147,7 +152,7 @@ try:
                     total_price = total_price + int(prices[result])
                     mill = total_price // 10000
                     thou = (total_price % 10000) // 1000
-                    hund = total_price % 1000
+                    hund = (total_price % 1000) // 100
                     braille(mill, 8)
                     time.sleep(1)
                     braille(thou, 4)
@@ -156,13 +161,13 @@ try:
                     time.sleep(1)
                     print("구매 완료")
                     speak("구매 완료")
-                    print("total price : %d", total_price)
+                    print("total price : ", total_price)
                     break
                     
                 if button_rmv.is_pressed:
                     print("구매 취소")
                     speak("구매 취소")
-                    print("total price : %d", total_price)
+                    print("total price : ", total_price)
                     break
 
                 if button_rst.is_pressed:
@@ -173,7 +178,7 @@ try:
                             time.sleep(1)
                     print("초기화 완료")
                     speak("초기화 완료")
-                    print("total price : %d", total_price)
+                    print("total price : ", total_price)
                     break
 
         if button_rst.is_pressed:
@@ -184,7 +189,7 @@ try:
                     time.sleep(1)
             print("초기화 완료")
             speak("초기화 완료")
-            print("total price : %d", total_price)
+            print("total price : ", total_price)
 
 except KeyboardInterrupt:
     picam2.stop()
