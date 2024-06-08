@@ -168,7 +168,7 @@ try:
                 if button_rst.is_pressed:
                     total_price = 0
                     for i in range(12):
-                        kit.servo[i].angle = 30
+                        servo(i, 0)
                         if i % 4 == 3:
                             time.sleep(1)
                     print("초기화 완료")
@@ -179,7 +179,7 @@ try:
         if button_rst.is_pressed:
             total_price = 0
             for i in range(12):
-                kit.servo[i].angle = 30
+                servo(i, 0)
                 if i % 4 == 3:
                     time.sleep(1)
             print("초기화 완료")
